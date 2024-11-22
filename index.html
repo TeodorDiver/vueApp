@@ -47,7 +47,7 @@
   </div>
   <script>
 
-       const contactInfo = {
+    const contactInfo = {
       couuntry: 'Россия',
       city: 'Москва',
       phone: '99999999',
@@ -56,7 +56,7 @@
     };
     const NotFound = { template: '<h2>Page not Found</h2>' };
     const Home = { template: '<h2>Home Page</h2>' };
-    
+
     const Contacts = {
       template: `<div>
                                   <h2>Контакты</h2>
@@ -67,7 +67,8 @@
                                   <br>
                                 <div><router-link to ="/"><button>домой</button></router-link></div>
                                   </div>` };
-    const Price = { template: `<p>Цены</p>` }
+
+
     const Feedback = {
       template: `<div>
                   <input type="text">
@@ -76,7 +77,7 @@
                   <br><br>
                   <div><router-link to="/"><button>домой</button></router-link></div>
                   </div>`
-                };
+    };
     const months = [
       { name: 'Январь', component: { template: '<h2>Январь</h2>' } },
       { name: 'Февраль', component: { template: '<h2>Февраль</h2>' } },
@@ -91,7 +92,28 @@
       { name: 'Ноябрь', component: { template: '<h2>Ноябрь</h2>' } },
       { name: 'Декабрь', component: { template: '<h2>Декабрь</h2>' } },
     ];
-
+    const Price = {
+      template: `
+      <div>
+      <h2>Цены</h2>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Месяц</th>
+            <th>Цена</th>
+          </tr>
+         </thead>
+         <tbody>
+          ${months.map(month => `
+          <tr>
+            <td>${month.name}</td>
+            <td>бесценно</td>
+          </tr>`).join('')}
+          </tbody>
+        </table>
+        <br>
+          <div><router-link to="/"><button>домой</button></router-link></div>
+       </div>` };
     const monthRoutes = months.map(month => ({
       path: month.name.toLowerCase(),
       component: month.component
@@ -103,7 +125,7 @@
                     ${months.map(month => `<div><router-link to="/galery/${month.name.toLowerCase()}">${month.name}</router-link></div>`).join('')}
                     </div>`
     };
-    const Galery = { template: '<div><h1>Галерея</h1><router-view></router-view><div><router-link to ="/"><button>домой</button></router-link></div></div>' };
+    const Galery = { template: '<div><h1>Галерея</h1><router-view></router-view><div><router-link to ="/"><br><button>домой</button></router-link></div></div>' };
 
     const routes = [
       { path: '/', component: Home },
@@ -129,7 +151,7 @@
       el: '#app',
       router
     });
-    
+
   </script>
 </body>
 
