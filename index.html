@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document123</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://unpkg.com/vue-router@3.0.0/dist/vue-router.js"></script>
+
+    <style>
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        display: inline-block;
+      }
+
+      a {
+        padding: 5px;
+      }
+
+      a.router-link-active,
+      li.router-link-active>a {
+        color: red
+      }
+    </style>
+  </head>
+
+<body>
+  <div id="app">
+    <ul>
+      <li><router-link tag="div" to="/" exact>Домашняя</router-link></li>
+      <li><router-link tag="div" to="/feedback">Оставить отзыв</router-link></li>
+      <li><router-link tag="div" to="/contacts">Контакты</router-link></li>
+      <li><router-link tag="div" to="/price">Цены</router-link></li>
+      <li><router-link tag="div" to="/galery">Галерея</router-link></li>
+    </ul>
+    <router-view></router-view>
+  </div>
+  <script>
+
+       const contactInfo = {
+      couuntry: 'Россия',
+      city: 'Москва',
+      phone: '99999999',
+      email: '99999@7777.рф'
+
+    };
+    const NotFound = { template: '<h2>Page not Found</h2>' };
+    const Home = { template: '<h2>Home Page</h2>' };
+    
+    const Contacts = {
+      template: `<div>
+                                  <h2>Контакты</h2>
+                                  <p>Страна: ${contactInfo.couuntry}</p>
+                                  <p>Город: ${contactInfo.city}</p>
+                                  <p>Телефон: ${contactInfo.phone}</p>
+                                  <p>Адрес: ${contactInfo.email}</p>
+                                  <br>
+                                <div><router-link to ="/"><button>домой</button></router-link></div>
+                                  </div>` };
+    const Price = { template: `<p>Цены</p>` }
+    const Feedback = {
+      template: `<div>
+                  <input type="text">
+                  <br><br>
+                  <button>Отправить</button>
+                  <br><br>
+                  <div><router-link to="/"><button>домой</button></router-link></div>
+                  </div>`
+                };
+    const months = [
+      { name: 'Январь', component: { template: '<h2>Январь</h2>' } },
+      { name: 'Февраль', component: { template: '<h2>Февраль</h2>' } },
+      { name: 'Март', component: { template: '<h2>Март</h2>' } },
+      { name: 'Апрель', component: { template: '<h2>Апрель</h2>' } },
+      { name: 'Май', component: { template: '<h2>Май</h2>' } },
+      { name: 'Июнь', component: { template: '<h2>Июнь</h2>' } },
+      { name: 'Июль', component: { template: '<h2>Июль</h2>' } },
+      { name: 'Август', component: { template: '<h2>Август</h2>' } },
+      { name: 'Сентябрь', component: { template: '<h2>Сентябрь</h2>' } },
+      { name: 'Октябрь', component: { template: '<h2>Октябрь</h2>' } },
+      { name: 'Ноябрь', component: { template: '<h2>Ноябрь</h2>' } },
+      { name: 'Декабрь', component: { template: '<h2>Декабрь</h2>' } },
+    ];
+
+    const monthRoutes = months.map(month => ({
+      path: month.name.toLowerCase(),
+      component: month.component
+    }));
+
+    const Index = {
+      template: `<div>
+                    <h3>Выберете месяц</h3>
+                    ${months.map(month => `<div><router-link to="/galery/${month.name.toLowerCase()}">${month.name}</router-link></div>`).join('')}
+                    </div>`
+    };
+    const Galery = { template: '<div><h1>Галерея</h1><router-view></router-view><div><router-link to ="/"><button>домой</button></router-link></div></div>' };
+
+    const routes = [
+      { path: '/', component: Home },
+      { path: '/contacts', component: Contacts },
+      { path: '/feedback', component: Feedback },
+      { path: '/price', component: Price },
+      { path: '*', component: NotFound },
+      {
+        path: '/galery', component: Galery,
+        children: [
+          ...monthRoutes,
+          { path: '', component: Index }
+        ]
+      }
+    ];
+
+    const router = new VueRouter({
+      mode: 'history',
+      routes
+    });
+
+    new Vue({
+      el: '#app',
+      router
+    });
+    
+  </script>
+</body>
+
+</html>
